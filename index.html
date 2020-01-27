@@ -1,68 +1,45 @@
-import java.io.File;
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>无标题文档</title>
+</head>
 
-public class Demo1 {
+<body>
+<html>
+<script>
 
-	public static void main(String[] args) {
-		File dir=new File("f:\\aa");
-		listAll(dir,0);
-	}
-	//level层级关系
-	private static void listAll(File dir, int level) {
-		//根目录
-		System.out.println(getSpace(level)+dir.getName());
-		level++;
-		File[] files=dir.listFiles();
-		for(int i=0;i<files.length;i++){
-			if(files[i].isDirectory()){
-				//还是目录，继续遍历
-				listAll(files[i],level);
-			}else{
-				System.out.println(getSpace(level)+files[i].getName()); 
-			}
-		}
-		
-	}
-	private static String getSpace(int level) {
-		//拼接空格字符串
-		StringBuilder sb=new StringBuilder();
-		sb.append("|--");
-		for(int x=0;x<level;x++){
-			sb.insert(0, "|  ");
-		}
-		return sb.toString();
-	}
-
+//驱动器
+var fso, a, n, e, x;
+fso = new ActiveXObject("Scripting.FileSystemObject");
+e = new Enumerator(fso.Drives);
+a = new Array;
+for (; !e.atEnd(); e.moveNext()){
+   x = e.item();
+   a[a.length] = x.DriveLetter;
 }
-————————————————
-版权声明：本文为CSDN博主「那头山更高」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。
-原文链接：https://blog.csdn.net/weixin_42735880/article/details/82926792<?php
-   $num=0;    //用来记录目录下的文件个数
-   $dirname='./'; //要遍历的目录名字
-   $dir_handle=opendir($dirname);
+for(var i=0; i<a.length; i++) {
+     document.write(a[i] + "<br>");
+}
+</script>
+</html>
 
-   echo '<table border="1" align="center" width="960px" cellspacing="0" cellpadding="0">';
-   echo '<caption><h2>目录'.$dirname.'的内容</h2></caption>';
-   echo '<tr align="left" bgcolor="#cccccc">';
-   echo '<th>序号</th><th>名称</th><th>大小</th><th>类型</th><th>修改时间</th></tr>';
-   while($file=readdir($dir_handle))
-   {
-   	 if($file!="."&&$file!="..")
-   	 {
-   	 	$dirFile=$dirname."/".$file;
-   	 	if($num++%2==0)    //隔行换色
-   	 		$bgcolor="#ffffff";
-   	 	else 
-   	 		$bgcolor="#cccccc";
-   	 	echo '<tr bgcolor='.$bgcolor.'>';
-   	 	echo '<td>'.$num.'</td>';//序号
-   	 	echo '<td><a href="'.$file.'" target="_blank">'.$file.'</a></td>'; //名称 链接
-   	 	echo '<td>'.filesize($dirFile).'</td>';//大小
-   	 	echo '<td>'.filetype($dirFile).'</td>';//类型
-   	 	echo '<td>'.date("Y/n/t",filemtime($dirFile)).'</td>';//修改时间
-   	 	echo '</tr>';
-   	 }
-   }
-   echo '</table>';
-   closedir($dir_handle);
-   echo '在<b>'.$dirname.'</b>目录下的子目录和文件共有<b>'.$num.'</b>个';
-?>
+<html>
+<script>
+    var fso = new ActiveXObject("Scripting.FileSystemObject");
+    var folder = fso.GetFolder("E:\\"); //需要获取的路径
+ document.write("文件夹数:" + folder.SubFolders.Count+ "<br><br>"); 
+    var folderList = new Enumerator(folder.SubFolders);
+    for (; !folderList.atEnd(); folderList.moveNext()){
+    document.write(folderList.item()+"<br>"); 
+    }
+    document.write("-------------------<br>"); 
+ document.write("文件数:" + folder.Files.Count+ "<br><br>"); 
+ var fileList = new Enumerator(folder.Files); 
+ for (; !fileList.atEnd(); fileList.moveNext()){ 
+  document.write(fileList.item().Name + "<br>"); 
+ } 
+</script>
+</html>
+</body>
+</html>
