@@ -1,31 +1,68 @@
-<?php
-   $num=0;    //������¼Ŀ¼�µ��ļ�����
-   $dirname='./'; //Ҫ������Ŀ¼����
+import java.io.File;
+
+public class Demo1 {
+
+	public static void main(String[] args) {
+		File dir=new File("f:\\aa");
+		listAll(dir,0);
+	}
+	//level层级关系
+	private static void listAll(File dir, int level) {
+		//根目录
+		System.out.println(getSpace(level)+dir.getName());
+		level++;
+		File[] files=dir.listFiles();
+		for(int i=0;i<files.length;i++){
+			if(files[i].isDirectory()){
+				//还是目录，继续遍历
+				listAll(files[i],level);
+			}else{
+				System.out.println(getSpace(level)+files[i].getName()); 
+			}
+		}
+		
+	}
+	private static String getSpace(int level) {
+		//拼接空格字符串
+		StringBuilder sb=new StringBuilder();
+		sb.append("|--");
+		for(int x=0;x<level;x++){
+			sb.insert(0, "|  ");
+		}
+		return sb.toString();
+	}
+
+}
+————————————————
+版权声明：本文为CSDN博主「那头山更高」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/weixin_42735880/article/details/82926792<?php
+   $num=0;    //用来记录目录下的文件个数
+   $dirname='./'; //要遍历的目录名字
    $dir_handle=opendir($dirname);
 
    echo '<table border="1" align="center" width="960px" cellspacing="0" cellpadding="0">';
-   echo '<caption><h2>Ŀ¼'.$dirname.'������</h2></caption>';
+   echo '<caption><h2>目录'.$dirname.'的内容</h2></caption>';
    echo '<tr align="left" bgcolor="#cccccc">';
-   echo '<th>���</th><th>����</th><th>��С</th><th>����</th><th>�޸�ʱ��</th></tr>';
+   echo '<th>序号</th><th>名称</th><th>大小</th><th>类型</th><th>修改时间</th></tr>';
    while($file=readdir($dir_handle))
    {
    	 if($file!="."&&$file!="..")
    	 {
    	 	$dirFile=$dirname."/".$file;
-   	 	if($num++%2==0)    //���л�ɫ
+   	 	if($num++%2==0)    //隔行换色
    	 		$bgcolor="#ffffff";
    	 	else 
    	 		$bgcolor="#cccccc";
    	 	echo '<tr bgcolor='.$bgcolor.'>';
-   	 	echo '<td>'.$num.'</td>';//���
-   	 	echo '<td><a href="'.$file.'" target="_blank">'.$file.'</a></td>'; //���� ����
-   	 	echo '<td>'.filesize($dirFile).'</td>';//��С
-   	 	echo '<td>'.filetype($dirFile).'</td>';//����
-   	 	echo '<td>'.date("Y/n/t",filemtime($dirFile)).'</td>';//�޸�ʱ��
+   	 	echo '<td>'.$num.'</td>';//序号
+   	 	echo '<td><a href="'.$file.'" target="_blank">'.$file.'</a></td>'; //名称 链接
+   	 	echo '<td>'.filesize($dirFile).'</td>';//大小
+   	 	echo '<td>'.filetype($dirFile).'</td>';//类型
+   	 	echo '<td>'.date("Y/n/t",filemtime($dirFile)).'</td>';//修改时间
    	 	echo '</tr>';
    	 }
    }
    echo '</table>';
    closedir($dir_handle);
-   echo '��<b>'.$dirname.'</b>Ŀ¼�µ���Ŀ¼���ļ�����<b>'.$num.'</b>��';
+   echo '在<b>'.$dirname.'</b>目录下的子目录和文件共有<b>'.$num.'</b>个';
 ?>
